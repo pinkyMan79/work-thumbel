@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-msg-table
+      author: terenin
+      changes:
+        - createTable:
+            tableName: t_msg
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: create_date
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: content
+                  type: VARCHAR(255)
+              - column:
+                  name: forum_id
+                  type: UUID
+              - column:
+                  name: sender_login
+                  type: VARCHAR(255)
+            constraints:
+              primaryKey:
+                constraintName: pk_t_msg
+                columnNames: id
+
+  - changeSet:
+      id: add-forum-foreign-key-constraint-to-msg
+      author: terenin
+      changes:
+        - addForeignKeyConstraint:
+            baseTableName: t_msg
+            baseColumnNames: forum_id
+            referencedTableName: t_forum
+            referencedColumnNames: id
+            constraintName: FK_T_MSG_ON_FORUM

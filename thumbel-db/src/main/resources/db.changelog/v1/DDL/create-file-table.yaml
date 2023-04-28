@@ -1,0 +1,37 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-file-table
+      author: terenin
+      changes:
+        - createTable:
+            tableName: t_file
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: create_date
+                  type: TIMESTAMP WITHOUT TIME ZONE
+              - column:
+                  name: file_name
+                  type: VARCHAR(255)
+              - column:
+                  name: file_location
+                  type: VARCHAR(255)
+              - column:
+                  name: data
+                  type: SMALLINT
+              - column:
+                  name: maintainer
+                  type: UUID
+            constraints:
+              - primaryKey:
+                  columnNames: id
+              - foreignKey:
+                  constraintName: FK_T_FILE_ON_MAINTAINER
+                  referencedTableName: t_file
+                  referencedColumnNames: id
+                  columnNames: maintainer
