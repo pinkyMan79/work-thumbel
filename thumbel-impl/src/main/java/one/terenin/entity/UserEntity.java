@@ -1,5 +1,6 @@
 package one.terenin.entity;
 
+import liquibase.pro.packaged.S;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -54,5 +55,21 @@ public class UserEntity extends AbstractEntity{
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Role role;
+
+    public boolean isAdmin(){
+        return role.equals(Role.ADMIN);
+    }
+    public boolean isUser(){
+        return role.equals(Role.USER);
+    }
+    public boolean isGuest(){
+        return role.equals(Role.GUEST);
+    }
+    public boolean isActive(){
+        return state.equals(State.NOT_BANNED);
+    }
+    public boolean isBanned(){
+        return state.equals(State.BANNED);
+    }
 
 }

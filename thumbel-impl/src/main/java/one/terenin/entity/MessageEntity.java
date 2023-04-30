@@ -27,7 +27,7 @@ public class MessageEntity extends AbstractEntity{
 
     @ManyToOne()
     @JoinColumn(name = "forum_id")
-    private ForumEntity forumId;
+    private ForumEntity forum;
 
     @Column(name = "sender_login")
     private String senderLogin;
