@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import one.terenin.dto.util.Position;
+import one.terenin.entity.common.Role;
+import one.terenin.entity.common.State;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,7 +26,7 @@ public class UserEntity extends AbstractEntity{
     private String login;
 
     @Column(name = "password")
-    private String password;
+    private String hashPassword;
 
     @Column(name = "photo")
     @Lob
@@ -44,5 +46,13 @@ public class UserEntity extends AbstractEntity{
     @Enumerated(EnumType.STRING)
     @Column(name = "position")
     private Position position;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    private State state;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
 
 }

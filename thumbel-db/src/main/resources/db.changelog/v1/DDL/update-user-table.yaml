@@ -1,0 +1,14 @@
+databaseChangelog:
+  - changeSet:
+      id: upd-user
+      author: terenin
+      changes:
+        - addColumn:
+            tableName: person
+            columns:
+             - column:
+                name: state
+                type: VARCHAR(255)
+             - column:
+                name: role
+                type: VARCHAR(255)
