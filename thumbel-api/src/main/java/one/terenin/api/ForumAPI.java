@@ -11,7 +11,7 @@ public interface ForumAPI {
     @PostMapping("/create")
     void createForum(ForumRequest request);
 
-    @GetMapping("/forum/{title}")
+    @GetMapping("/find/{title}")
     ForumResponse getForum(@PathVariable("title") String title);
 
     @PostMapping("/send")

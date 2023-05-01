@@ -1,5 +1,6 @@
 package one.terenin.service.impl.util.mapper;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import one.terenin.dto.file.FileRequest;
 import one.terenin.dto.file.FileResponse;
@@ -19,9 +20,10 @@ import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class FileMapper {
 
-    private final UserRepository repository;
+    private UserRepository repository;
 
     // on generation moment have no files/friends
     public Function<FileRequest, FileEntity> fromRequestToEntity = req -> {

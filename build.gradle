@@ -41,7 +41,6 @@ subprojects{
         implementation "org.springframework:spring-webmvc:${mvcVersion}"
         implementation "org.springframework:spring-context:${mvcVersion}"
         implementation 'org.apache.httpcomponents.core5:httpcore5:5.2.1'
-        implementation 'javax.validation:validation-api:2.0.1.Final'
         implementation 'org.springframework:spring-jdbc:5.3.16'
         implementation 'org.postgresql:postgresql:42.4.0'
         implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"

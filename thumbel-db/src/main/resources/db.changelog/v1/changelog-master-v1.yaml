@@ -11,3 +11,6 @@ databaseChangeLog:
   - include:
       file: ./DDL/create-file-table.yaml
       relativeToChangelogFile: true
+  - include:
+      file: ./DDL/update-user-table.yaml
+      relativeToChangelogFile: true

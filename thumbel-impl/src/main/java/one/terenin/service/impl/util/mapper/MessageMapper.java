@@ -1,5 +1,6 @@
 package one.terenin.service.impl.util.mapper;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import one.terenin.dto.communication.ForumRequest;
 import one.terenin.dto.communication.ForumResponse;
@@ -14,9 +15,10 @@ import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class MessageMapper {
 
-    private final ForumRepository repository;
+    private ForumRepository repository;
 
     public Function<MessageRequest, MessageEntity> fromRequestToEntity = req -> {
         return new MessageEntity(

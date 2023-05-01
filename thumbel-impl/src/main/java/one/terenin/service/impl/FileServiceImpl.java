@@ -23,7 +23,7 @@ public class FileServiceImpl implements FileService {
     @SneakyThrows
     @Override
     public void doUpload(FileRequest request, Part file) {
-        FileEntity entity = repository.save(mapper.fromRequestToEntity.apply(request));
+        FileEntity entity = mapper.fromRequestToEntity.apply(request);
         byte[] data = null;
         InputStream inputStream = file.getInputStream();
         if (inputStream == null){
@@ -31,6 +31,7 @@ public class FileServiceImpl implements FileService {
         }
         data = inputStream.readAllBytes();
         entity.setData(data);
+        repository.save(entity);
     }
 
     @Override

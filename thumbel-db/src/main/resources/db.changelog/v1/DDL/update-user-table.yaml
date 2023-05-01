@@ -1,10 +1,10 @@
-databaseChangelog:
+databaseChangeLog:
   - changeSet:
       id: upd-user
       author: terenin
       changes:
         - addColumn:
-            tableName: person
+            tableName: t_user
             columns:
              - column:
                 name: state

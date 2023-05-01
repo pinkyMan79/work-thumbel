@@ -42,7 +42,7 @@ public class WebMvcInitializer implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("/fragments/hello");
+        registry.addViewController("/").setViewName("/fragments/index");
     }
 
     @Override
