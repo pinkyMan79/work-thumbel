@@ -32,7 +32,7 @@ public class UserEntity extends AbstractEntity{
     @Column(name = "photo")
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    private byte photo;
+    private byte[] photo;
 
     @Column(name = "bio")
     private String biography;

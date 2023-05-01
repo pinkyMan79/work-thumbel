@@ -22,7 +22,7 @@ public class UserRequest {
     private String repeatPassword;
     @NotBlank
     private String email;
-    private byte photo;
+    private byte[] photo;
     private String biography;
     private Position position;
 

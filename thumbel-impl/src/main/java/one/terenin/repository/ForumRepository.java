@@ -8,4 +8,7 @@ import java.util.UUID;
 
 @Repository
 public interface ForumRepository extends JpaRepository<ForumEntity, UUID> {
+
+    ForumEntity findForumEntityByTitle(String title);
+
 }

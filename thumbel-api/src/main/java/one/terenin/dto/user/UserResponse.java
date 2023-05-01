@@ -19,7 +19,7 @@ public class UserResponse {
     private String login;
     private Instant createdDate;
     //private String password;UUID
-    private byte photo;
+    private byte[] photo;
     private String biography;
     private Position position;
 

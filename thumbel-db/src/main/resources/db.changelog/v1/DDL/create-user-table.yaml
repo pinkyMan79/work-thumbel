@@ -23,7 +23,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
               - column:
                   name: photo
-                  type: SMALLINT
+                  type: OID
               - column:
                   name: bio
                   type: VARCHAR(255)

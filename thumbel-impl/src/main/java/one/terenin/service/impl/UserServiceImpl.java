@@ -24,8 +24,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse doLogin(UserLoginRequest loginRequest) {
-        repository.findUserEntityByLoginAndHashPassword(loginRequest.getLogin(),
-                loginRequest.getPassword());
+       return mapper
+               .fromEntityToResponse
+               .apply(repository
+                       .findUserEntityByLoginAndHashPassword(
+                               loginRequest.getLogin(),
+                               loginRequest.getPassword()));
     }
 
     @Override

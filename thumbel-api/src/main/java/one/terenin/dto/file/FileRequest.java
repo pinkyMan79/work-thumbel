@@ -18,7 +18,7 @@ public class FileRequest {
     private String fileName;
     @NotBlank
     private String fileLocation;
-    private byte data;
+    private byte[] data;
     @NotBlank
     private UUID maintainer;
 

@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class FileEntity extends AbstractEntity{
     @Column(name = "data")
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    private byte data;
+    private byte[] data;
 
     @ManyToOne()
     @JoinColumn(name = "maintainer")

@@ -23,7 +23,7 @@ databaseChangeLog:
                   type: VARCHAR(255)
               - column:
                   name: data
-                  type: SMALLINT
+                  type: OID
               - column:
                   name: maintainer
                   type: UUID
