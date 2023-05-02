@@ -3,6 +3,7 @@ package one.terenin.config;
 import one.terenin.config.base.DataBaseConfig;
 import one.terenin.config.base.WebMvcInitializer;
 import one.terenin.config.base.YAMLConfigurer;
+import one.terenin.security.SecurityConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -23,6 +24,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         context.register(YAMLConfigurer.class);
         context.register(DataBaseConfig.class);
         context.register(WebMvcInitializer.class);
+        context.register(SecurityConfig.class);
 
         servletContext.addListener(new ContextLoaderListener(context));
 

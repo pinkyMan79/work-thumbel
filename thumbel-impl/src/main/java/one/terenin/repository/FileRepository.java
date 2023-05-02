@@ -13,8 +13,8 @@ public interface FileRepository extends JpaRepository<FileEntity, UUID> {
 
     FileEntity findFileEntityByFileName(String fileName);
 
-    @Query("select friends.files from UserEntity.friends friends" +
+   /* @Query("select friends.files from UserEntity.friends friends" +
             " join fetch UserEntity u where u.id = :uuid")
-    List<FileEntity> findAllFriendsFilesByUserEntityId(UUID uuid);
+    List<FileEntity> findAllFriendsFilesByUserEntityId(UUID uuid);*/
 
 }
