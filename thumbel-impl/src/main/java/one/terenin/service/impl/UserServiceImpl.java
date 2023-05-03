@@ -10,6 +10,9 @@ import one.terenin.service.impl.util.mapper.UserMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Comparator;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
