@@ -74,9 +74,10 @@ public class JwtTokenRepository implements CsrfTokenRepository {
         }
     }
 
+    // штука, для того чтобы получить токен с запроса пользователя
     @Override
     public CsrfToken loadToken(HttpServletRequest request) {
-        // загрузка токена из реквеста, для последующей его обработки
+        // загрузка токена из реквеста, для последующей обработки
         return (CsrfToken) request.getAttribute(CsrfToken.class.getName());
     }
 
