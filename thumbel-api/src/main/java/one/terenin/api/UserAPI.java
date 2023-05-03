@@ -5,6 +5,8 @@ import one.terenin.dto.user.UserRequest;
 import one.terenin.dto.user.UserResponse;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/user")
 public interface UserAPI {
 
@@ -16,6 +18,9 @@ public interface UserAPI {
 
     @PutMapping("/subscribe/{sub-login}")
     void subscribe(@PathVariable("sub-login") String login);
+
+    @GetMapping("/all")
+    List<UserResponse> getAllUsers();
 
     // load/upload file + create forum + message sending
 
