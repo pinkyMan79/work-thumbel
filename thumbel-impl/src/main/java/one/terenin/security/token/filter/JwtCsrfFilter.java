@@ -26,19 +26,21 @@ public class JwtCsrfFilter extends OncePerRequestFilter {
     private final CsrfTokenRepository repository;
     private final HandlerExceptionResolver resolver;
 
+    //вот бы сюда SneakyThrows :-)
+
     @Override // здесь описана логика по которой валидируется или генерируется токен
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         request.setAttribute(HttpServletResponse.class.getName(), response);
-        // подгружаем токен из репозитория от нашего реквеста
+        // подгружаем токен из репозитория от нашего реквеста(точнее из хедера, провались в реализацию, там видно)
         CsrfToken token = repository.loadToken(request);
         // проверяем погрузился ли токен из репозитория
         boolean isNotTokenPresent = token == null;
         if (isNotTokenPresent){
-            // если токена не оказалось, то сгенерируем новый и сохраним его в репозиторий
+            // если в хедерах реквеста токена не оказалось, то сгенерируем новый и сохраним его в репозиторий
             token = repository.generateToken(request);
             repository.saveToken(token, request, response);
         }
-        // токен теперь точно есть, тогда засетим его в аттрибуты и параметры http запроса таким образом
+        // токен теперь точно есть, тогда засетим его в аттрибуты http запроса таким образом
         request.setAttribute(CsrfToken.class.getName(), token);
         request.setAttribute(token.getParameterName(), token);
         // проверяем путь от которого шёл запрос
@@ -51,7 +53,7 @@ public class JwtCsrfFilter extends OncePerRequestFilter {
                 resolver.resolveException(request,
                         response,
                         null,
-                        new MissingCsrfTokenException("missing token:" + token));
+                        new MissingCsrfTokenException("missing token: " + token));
             }
         }else {
             // а если пользователь уже залогинен, то стоит проверить его токен. Получаем токен для начала из заголовка
