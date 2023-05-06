@@ -25,15 +25,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Objects;
 
 
-// здесь идёт процесс подтверждения личности пользователя
-// стоит ли здесь перейти на AbstractAuthenticationProcessingFilter?
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {

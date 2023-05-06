@@ -25,7 +25,7 @@ import java.util.UUID;
 public class JwtTokenRepository implements CsrfTokenRepository {
 
     @Getter
-    private String secret;
+    private final String secret;
 
     public JwtTokenRepository() {
         this.secret = "generated";

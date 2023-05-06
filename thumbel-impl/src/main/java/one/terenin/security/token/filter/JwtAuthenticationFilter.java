@@ -24,6 +24,9 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 
+// здесь идёт процесс подтверждения личности пользователя
+// стоит ли здесь перейти на AbstractAuthenticationProcessingFilter?
+
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

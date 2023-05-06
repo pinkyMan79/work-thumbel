@@ -1,7 +1,10 @@
 package one.terenin.security;
 
 import lombok.Data;
+import lombok.SneakyThrows;
 import one.terenin.security.details.UserDetailsServiceBase;
+import one.terenin.security.token.filter.JwtAuthenticationFilter;
+import one.terenin.security.token.filter.JwtAuthorizationFilter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +14,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -75,7 +80,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .rememberMe()
                 .rememberMeParameter("remember")
-                .tokenRepository(tokenRepository());
+                .tokenRepository(tokenRepository())
+                .and()
+                //add custom JWT filter
+                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
+                .cors()
+                .and()
+                // сессию отключаем, так как теперь у нас всё хранится в JWT и оттуда мы тянем информацию
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
     @Override
@@ -94,4 +108,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         tokenRepository.setDataSource(dataSource);
         return tokenRepository;
     }
+
+    @SneakyThrows
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http){
+        return http.build();
+    }
+
 }
