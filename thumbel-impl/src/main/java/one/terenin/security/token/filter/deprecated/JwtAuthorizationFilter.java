@@ -1,4 +1,4 @@
-package one.terenin.security.token.filter;
+package one.terenin.security.token.filter.deprecated;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 
-
+@Deprecated
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);

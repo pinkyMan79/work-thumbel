@@ -4,6 +4,7 @@ import one.terenin.api.UserAPI;
 import one.terenin.dto.user.UserLoginRequest;
 import one.terenin.dto.user.UserRequest;
 import one.terenin.dto.user.UserResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -12,12 +13,12 @@ import java.util.List;
 public class UserController implements UserAPI {
 
     @Override
-    public UserResponse register(UserRequest request) {
+    public ResponseEntity<UserResponse> register(UserRequest request) {
         return null;
     }
 
     @Override
-    public UserResponse login(UserLoginRequest request) {
+    public ResponseEntity<UserResponse> login(UserLoginRequest request) {
         return null;
     }
 
@@ -27,7 +28,7 @@ public class UserController implements UserAPI {
     }
 
     @Override
-    public List<UserResponse> getAllUsers() {
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
         return null;
     }
 }

@@ -1,13 +1,14 @@
 package one.terenin.security;
 
-import lombok.Data;
 import lombok.SneakyThrows;
+import net.bytebuddy.utility.nullability.NeverNull;
 import one.terenin.security.details.UserDetailsServiceBase;
-import one.terenin.security.token.filter.JwtAuthenticationFilter;
-import one.terenin.security.token.filter.JwtAuthorizationFilter;
+import one.terenin.security.token.filter.actual.AuthTokenFilter;
+import one.terenin.security.token.filter.common.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,17 +22,17 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import javax.persistence.Persistence;
 import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PasswordEncoder encoder;
     private final UserDetailsServiceBase userService;
     private final DataSource dataSource;
+    private final JwtUtils utils;
 
     /**
      * @apiNote
@@ -44,52 +45,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public SecurityConfig(PasswordEncoder encoder,
                           @Qualifier("userDetailsServiceBase") UserDetailsServiceBase userService,
-                          DataSource dataSource) {
+                          DataSource dataSource,
+                          JwtUtils utils) {
         this.encoder = encoder;
         this.userService = userService;
         this.dataSource = dataSource;
+        this.utils = utils;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                // -- User base block
-                .antMatchers("/user/register/").permitAll()
-                .antMatchers("/user/login/").permitAll()
-                .antMatchers("/user/subscribe/").authenticated()
-                // -- File block
-                .antMatchers("/file/upload/").authenticated()
-                .antMatchers("/file/download/").authenticated()
-                // -- Forum block
-                .antMatchers("/forum/create/").hasAuthority("ADMIN")
-                .antMatchers("/forum/find/").authenticated()
-                .antMatchers("/forum/send/").authenticated()
-                .and()
-                // -- common configuration
-                .formLogin()
-                .loginPage("/show/login-page")
-                .usernameParameter("login")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/show/profile-page")
-                .failureUrl("/show/error-page")
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/show/logout-page"))
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .and()
-                .rememberMe()
-                .rememberMeParameter("remember")
-                .tokenRepository(tokenRepository())
-                .and()
+        http// -- common configuration
                 //add custom JWT filter
-                .addFilter(new JwtAuthenticationFilter(authenticationManager()))
-                .addFilter(new JwtAuthorizationFilter(authenticationManager()))
+                .addFilter(authTokenFilter())
                 .cors()
                 .and()
                 // сессию отключаем, так как теперь у нас всё хранится в JWT и оттуда мы тянем информацию
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeRequests()
+                .antMatchers("/forum/**").permitAll()
+                .antMatchers("/user/**").permitAll()
+                .antMatchers("/file/**").permitAll()
+                .anyRequest().authenticated();
     }
 
     @Override
@@ -113,6 +91,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http){
         return http.build();
+    }
+
+    @Bean
+    public AuthTokenFilter authTokenFilter(){
+        return new AuthTokenFilter();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
 }

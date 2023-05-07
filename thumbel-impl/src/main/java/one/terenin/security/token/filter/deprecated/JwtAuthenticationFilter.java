@@ -1,4 +1,4 @@
-package one.terenin.security.token.filter;
+package one.terenin.security.token.filter.deprecated;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -26,7 +26,7 @@ import java.util.Date;
 
 // здесь идёт процесс подтверждения личности пользователя
 // стоит ли здесь перейти на AbstractAuthenticationProcessingFilter?
-
+@Deprecated
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 

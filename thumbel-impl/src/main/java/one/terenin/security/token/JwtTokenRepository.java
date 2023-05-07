@@ -21,6 +21,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+@Deprecated(forRemoval = true)
 @Repository
 public class JwtTokenRepository implements CsrfTokenRepository {
 

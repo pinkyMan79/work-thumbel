@@ -17,7 +17,10 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "t_user")
+@Table(name = "t_user", uniqueConstraints = {
+        @UniqueConstraint(name = "login", columnNames = "login"),
+        @UniqueConstraint(name = "hashPassword", columnNames = "password")
+    })
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor

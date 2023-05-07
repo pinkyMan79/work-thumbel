@@ -7,7 +7,7 @@ import one.terenin.dto.user.UserResponse;
 
 public interface UserService {
 
-    void doRegister(UserRequest request);
+    UserResponse doRegister(UserRequest request);
 
     UserResponse doLogin(UserLoginRequest loginRequest);
 

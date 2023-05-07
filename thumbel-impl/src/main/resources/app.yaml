@@ -6,3 +6,8 @@ db:
     max-pool-size: 10
   driver:
     classname: org.postgresql.Driver
+
+spring:
+  security:
+    jwt:
+      secret: 3eb5dee7de954d6ca9a0c6d9219f35c6

@@ -10,5 +10,6 @@ import java.util.UUID;
 public interface ForumRepository extends JpaRepository<ForumEntity, UUID> {
 
     ForumEntity findForumEntityByTitle(String title);
+    boolean existsByTitle(String title);
 
 }

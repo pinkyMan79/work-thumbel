@@ -1,4 +1,4 @@
-package one.terenin.security.token.filter;
+package one.terenin.security.token.filter.deprecated;
 
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Deprecated(forRemoval = true)
 @RequiredArgsConstructor
 public class JwtCsrfFilter extends OncePerRequestFilter {
 
