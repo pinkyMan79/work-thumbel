@@ -18,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -32,7 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final PasswordEncoder encoder;
     private final UserDetailsServiceBase userService;
     private final DataSource dataSource;
-    private final JwtUtils utils;
 
     /**
      * @apiNote
@@ -45,19 +45,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     public SecurityConfig(PasswordEncoder encoder,
                           @Qualifier("userDetailsServiceBase") UserDetailsServiceBase userService,
-                          DataSource dataSource,
-                          JwtUtils utils) {
+                          DataSource dataSource) {
         this.encoder = encoder;
         this.userService = userService;
         this.dataSource = dataSource;
-        this.utils = utils;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http// -- common configuration
                 //add custom JWT filter
-                .addFilter(authTokenFilter())
+                .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .cors()
                 .and()
                 // сессию отключаем, так как теперь у нас всё хранится в JWT и оттуда мы тянем информацию
@@ -85,12 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         tokenRepository.setDataSource(dataSource);
         return tokenRepository;
-    }
-
-    @SneakyThrows
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http){
-        return http.build();
     }
 
     @Bean
