@@ -53,6 +53,9 @@ subprojects{
         implementation 'org.springframework.security:spring-security-config:5.6.5'
         implementation 'org.springframework.security:spring-security-taglibs:5.6.5'
 
+        testImplementation 'org.mockito:mockito-core:5.3.1'
+        testImplementation 'org.hamcrest:hamcrest:2.2'
+
     }
 
 

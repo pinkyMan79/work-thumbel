@@ -4,6 +4,7 @@ import one.terenin.api.UserAPI;
 import one.terenin.dto.user.UserLoginRequest;
 import one.terenin.dto.user.UserRequest;
 import one.terenin.dto.user.UserResponse;
+import org.springframework.amqp.core.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,6 +12,8 @@ import java.util.List;
 
 @RestController
 public class UserController implements UserAPI {
+
+
 
     @Override
     public ResponseEntity<UserResponse> register(UserRequest request) {
@@ -30,5 +33,10 @@ public class UserController implements UserAPI {
     @Override
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         return null;
+    }
+
+    @Override
+    public void sendEmail(Message message) {
+
     }
 }

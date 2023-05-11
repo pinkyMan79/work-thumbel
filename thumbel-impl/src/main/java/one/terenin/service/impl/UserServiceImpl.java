@@ -8,6 +8,8 @@ import one.terenin.entity.UserEntity;
 import one.terenin.entity.common.Role;
 import one.terenin.repository.UserRepository;
 import one.terenin.security.details.UserDetailsBase;
+import one.terenin.security.token.filter.common.JwtResponse;
+import one.terenin.security.token.filter.common.SecurityConstants;
 import one.terenin.security.token.filter.common.util.JwtUtils;
 import one.terenin.service.UserService;
 import one.terenin.service.impl.util.mapper.UserMapper;
@@ -18,6 +20,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 
 @Component
@@ -43,7 +46,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse doLogin(UserLoginRequest loginRequest) {
+    public JwtResponse doLogin(UserLoginRequest loginRequest) {
        Authentication authentication = manager.authenticate(
                new UsernamePasswordAuthenticationToken(loginRequest.getLogin(), loginRequest.getPassword())
        );
@@ -52,7 +55,11 @@ public class UserServiceImpl implements UserService {
         UserDetailsBase userDetails = (UserDetailsBase) authentication.getPrincipal();
         List<String> userRoles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority).toList();
-        return mapper.fromEntityToResponse.apply(userDetails.getEntity());
+        return new JwtResponse(token,
+                SecurityConstants.TOKEN_PREFIX,
+                userDetails.getEntity().getId(),
+                userDetails.username(),
+                Collections.singleton(userDetails.getEntity().getRole()));
     }
 
     @Override

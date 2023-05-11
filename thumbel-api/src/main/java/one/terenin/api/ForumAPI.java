@@ -14,7 +14,7 @@ public interface ForumAPI {
 
     @PostMapping("/create")
     @PreAuthorize("hasRole('ADMIN')")
-    void createForum(ForumRequest request);
+    void createForum(@RequestBody ForumRequest request);
 
     @GetMapping("/find/{title}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
