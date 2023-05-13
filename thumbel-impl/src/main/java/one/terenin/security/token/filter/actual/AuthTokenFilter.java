@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-@Slf4j
+//@Slf4j
 public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -45,19 +46,19 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         try{
             String token = parseJwt(request);
             if (Objects.nonNull(token) && utils.checkToken(token)){
-                log.info("{}{}", "get valid token: ", token);
+              //  log.info("{}{}", "get valid token: ", token);
                 String login = utils.getLoginFromToken(token);
-                log.info("{}{}", "get login from token", token);
+             //   log.info("{}{}", "get login from token", token);
                 UserDetails details = userDetailsService.loadUserByUsername(login);
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(details, null, details.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-                log.info("token was injected to security context");
+               // log.info("token was injected to security context");
             }
         }catch (Exception e){
-            log.error("troubles on token parsing");
-            log.trace(e.getMessage());
+            //log.error("troubles on token parsing");
+            //log.trace(e.getMessage());
         }
         filterChain.doFilter(request, response);
     }
@@ -67,7 +68,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         if (Objects.nonNull(token)
                 && StringUtils.hasText(token)
                 && token.startsWith(SecurityConstants.TOKEN_PREFIX)){
-            return token.substring(SecurityConstants.TOKEN_PREFIX.length(), token.length());
+            return token.substring(SecurityConstants.TOKEN_PREFIX.length());
         }
         return null;
     }

@@ -4,7 +4,10 @@ package one.terenin.service;
 import one.terenin.dto.user.UserLoginRequest;
 import one.terenin.dto.user.UserRequest;
 import one.terenin.dto.user.UserResponse;
-import one.terenin.security.token.filter.common.JwtResponse;
+import one.terenin.dto.security.JwtResponse;
+
+import javax.servlet.http.HttpServletRequest;
+import java.net.http.HttpRequest;
 
 public interface UserService {
 

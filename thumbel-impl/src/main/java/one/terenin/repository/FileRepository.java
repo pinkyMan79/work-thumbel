@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.UUID;
 
+// non-caching
 @Repository
 public interface FileRepository extends JpaRepository<FileEntity, UUID> {
 

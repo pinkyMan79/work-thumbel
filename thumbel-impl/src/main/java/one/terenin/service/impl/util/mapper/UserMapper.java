@@ -2,6 +2,7 @@ package one.terenin.service.impl.util.mapper;
 
 import one.terenin.dto.user.UserRequest;
 import one.terenin.dto.user.UserResponse;
+import one.terenin.dto.util.Position;
 import one.terenin.entity.UserEntity;
 import one.terenin.entity.common.Role;
 import one.terenin.entity.common.State;
@@ -21,6 +22,7 @@ public class UserMapper {
         return new UserEntity(
                 req.getLogin(),
                 encoder.encode(req.getPassword()),
+                req.getEmail(),
                 req.getPhoto(),
                 req.getBiography(),
                 null,

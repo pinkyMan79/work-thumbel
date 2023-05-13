@@ -1,11 +1,13 @@
 package one.terenin.api;
 
+import one.terenin.dto.security.JwtResponse;
 import one.terenin.dto.user.UserLoginRequest;
 import one.terenin.dto.user.UserRequest;
 import one.terenin.dto.user.UserResponse;
 import org.springframework.amqp.core.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,13 +17,15 @@ import java.util.List;
 public interface UserAPI {
 
     @PostMapping("/register")
+    @PreAuthorize("permitAll()")
     ResponseEntity<UserResponse> register(@RequestBody UserRequest request);
 
     @PostMapping("/login")
-    ResponseEntity<UserResponse> login(@RequestBody UserLoginRequest request);
+    @PreAuthorize("permitAll()")
+    ResponseEntity<JwtResponse> login(@RequestBody UserLoginRequest request);
 
     @PutMapping("/subscribe/{sub-login}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('USER') or hasAuthority('ADMIN')")
     void subscribe(@PathVariable("sub-login") String login);
 
     @GetMapping("/all")
@@ -34,7 +38,7 @@ public interface UserAPI {
      * просто подтвердит валидность e-mail и сгенерит JWT токен
      * */
     @PostMapping("/email")
-    @PreAuthorize("permitAll()")
+    //@PreAuthorize("permitAll()")
     void sendEmail(@RequestBody Message message);
 
     // load/upload file + create forum + message sending

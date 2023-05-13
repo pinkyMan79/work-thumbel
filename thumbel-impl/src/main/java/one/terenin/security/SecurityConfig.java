@@ -4,11 +4,13 @@ import lombok.SneakyThrows;
 import net.bytebuddy.utility.nullability.NeverNull;
 import one.terenin.security.details.UserDetailsServiceBase;
 import one.terenin.security.token.filter.actual.AuthTokenFilter;
+import one.terenin.security.token.filter.actual.AuthenticationEntryPointExceptionInterceptorJwt;
 import one.terenin.security.token.filter.common.util.JwtUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +19,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultSecurityFilterChain;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
@@ -24,9 +28,11 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -53,8 +59,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http// -- common configuration
                 //add custom JWT filter
+                .exceptionHandling()
+                .authenticationEntryPoint(exceptionInterceptorJwt())
+                .and()
                 .addFilterBefore(authTokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .cors()
                 .and()
@@ -65,17 +75,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/forum/**").permitAll()
                 .antMatchers("/user/**").permitAll()
                 .antMatchers("/file/**").permitAll()
-                .anyRequest().authenticated();
+        ;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(encoder);
+        auth.userDetailsService(userService).passwordEncoder(encoder).configure(auth);
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
         super.configure(web);
+    }
+
+    @Bean
+    public FilterChainProxy filterChainProxy() {
+        List<SecurityFilterChain> securityFilterChains = new ArrayList<>();
+        securityFilterChains.add(new DefaultSecurityFilterChain(
+                new AntPathRequestMatcher("/admin/**"), authTokenFilter()));
+        securityFilterChains.add(new DefaultSecurityFilterChain(
+                new AntPathRequestMatcher("/user/**"), authTokenFilter()));
+        securityFilterChains.add(new DefaultSecurityFilterChain(
+                new AntPathRequestMatcher("/**"), authTokenFilter()));
+        return new FilterChainProxy(securityFilterChains);
     }
 
     @Bean
@@ -91,9 +113,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
+    public AuthenticationEntryPointExceptionInterceptorJwt exceptionInterceptorJwt(){
+        return new AuthenticationEntryPointExceptionInterceptorJwt();
+    }
+
+    @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+        return super.authenticationManager();
     }
 
 }

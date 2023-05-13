@@ -13,31 +13,31 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
 @Data
-@PropertySource("classpath:app.yaml")
+@PropertySource("classpath:/app.yaml")
 @Slf4j
 public class JwtUtils {
 
+    @Value("${spring.security.jwt.secret}")
     private String secret;
-
-    public JwtUtils(@Value("${spring.security.jwt.secret}") String secret) {
-        this.secret = secret;
-    }
 
     public String generateJwToken(Authentication authentication){
         Date now = new Date();
         Date exp = Date.from(LocalDateTime.now().plusMinutes(30).atZone(ZoneId.systemDefault()).toInstant());
-        log.info("{}{}{}","making token with expiration", now.toString() ,exp.toString());
+        log.info("{} {} {}","making token with expiration ", now.toString() ,exp.toString());
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String token = Jwts.builder()
-                .setSubject(userDetails.username())
-                .setExpiration(exp).signWith(SignatureAlgorithm.ES512, secret).compact();
+                .setSubject(userDetails.getUsername())
+                .setExpiration(exp).signWith(SignatureAlgorithm.HS256,
+                        secret).compact();
         log.info("{}{}", "token generated: ", token);
         return token;
 

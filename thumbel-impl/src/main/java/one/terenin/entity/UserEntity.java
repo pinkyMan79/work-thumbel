@@ -1,5 +1,6 @@
 package one.terenin.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import liquibase.pro.packaged.S;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,9 @@ public class UserEntity extends AbstractEntity{
     @Column(name = "password")
     private String hashPassword;
 
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "photo")
     @Lob
     @Basic(fetch = FetchType.LAZY)
@@ -43,8 +47,12 @@ public class UserEntity extends AbstractEntity{
     @OneToMany(mappedBy = "maintainer", fetch = FetchType.EAGER)
     private Set<FileEntity> files;
 
-    @OneToMany
-    @JoinColumn(name = "friends")
+    @ManyToMany
+    @JoinTable(
+            name = "user_to_subs",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "subscriber_id")
+    )
     private List<UserEntity> friends;
 
     @Enumerated(EnumType.STRING)

@@ -1,9 +1,9 @@
 databaseChangeLog:
   - include:
-      file: ./DDL/create-forum-table.yaml
+      file: ./DDL/create_table_user_friends.sql
       relativeToChangelogFile: true
   - include:
-      file: ./DDL/create-user-table.yaml
+      file: ./DDL/create-forum-table.yaml
       relativeToChangelogFile: true
   - include:
       file: ./DDL/create-message-table.yaml
@@ -11,6 +11,4 @@ databaseChangeLog:
   - include:
       file: ./DDL/create-file-table.yaml
       relativeToChangelogFile: true
-  - include:
-      file: ./DDL/update-user-table.yaml
-      relativeToChangelogFile: true
+

@@ -1,10 +1,9 @@
-package one.terenin.security.token.filter.common;
+package one.terenin.dto.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import one.terenin.entity.common.Role;
 
 import java.util.Set;
 import java.util.UUID;
@@ -20,6 +19,6 @@ public class JwtResponse {
     //pay-load
     private UUID id;
     private String username;
-    private Set<Role> roleSet;
+    private Set<String> roleSet;
 
 }

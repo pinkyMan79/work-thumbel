@@ -1,6 +1,7 @@
 package one.terenin.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import one.terenin.dto.user.UserLoginRequest;
 import one.terenin.dto.user.UserRequest;
 import one.terenin.dto.user.UserResponse;
@@ -8,7 +9,7 @@ import one.terenin.entity.UserEntity;
 import one.terenin.entity.common.Role;
 import one.terenin.repository.UserRepository;
 import one.terenin.security.details.UserDetailsBase;
-import one.terenin.security.token.filter.common.JwtResponse;
+import one.terenin.dto.security.JwtResponse;
 import one.terenin.security.token.filter.common.SecurityConstants;
 import one.terenin.security.token.filter.common.util.JwtUtils;
 import one.terenin.service.UserService;
@@ -16,13 +17,14 @@ import one.terenin.service.impl.util.mapper.UserMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -48,23 +50,35 @@ public class UserServiceImpl implements UserService {
     @Override
     public JwtResponse doLogin(UserLoginRequest loginRequest) {
        Authentication authentication = manager.authenticate(
-               new UsernamePasswordAuthenticationToken(loginRequest.getLogin(), loginRequest.getPassword())
+               new UsernamePasswordAuthenticationToken(loginRequest.getLogin(),
+                       loginRequest.getPassword())
        );
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = utils.generateJwToken(authentication);
         UserDetailsBase userDetails = (UserDetailsBase) authentication.getPrincipal();
-        List<String> userRoles = userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).toList();
         return new JwtResponse(token,
                 SecurityConstants.TOKEN_PREFIX,
                 userDetails.getEntity().getId(),
-                userDetails.username(),
-                Collections.singleton(userDetails.getEntity().getRole()));
+                userDetails.getUsername(),
+                Collections.singleton(userDetails.getEntity().getRole().toString()));
     }
 
+
+    /**@apiNote
+     * Логика такая - берем пользователя из {@link SecurityContext}
+     * Берём при помощи такого объекта аутентификации как {@link UsernamePasswordAuthenticationToken}
+     * он там уже заведомо лежит так как пользователь залогинен, выдача объекта аутентификации происходит в методе
+     * doLogin выше, везде где нам нужен пользователь используем Context
+     * */
     @Override
     public void doSubscribe(String subscribeToLogin) {
-        // session user do subscription to someone by user
-        // session use like SecurityContext
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info(authentication.getName() + "  " + authentication.getPrincipal());
+        log.info("{}{}", "get authentication with: ", authentication.getName());
+        UserEntity sessionUser = repository.findUserEntityByLogin(((UserDetailsBase)
+                (authentication.getPrincipal())).getUsername());
+        UserEntity subscribeTo = repository.findUserEntityByLogin(subscribeToLogin);
+        sessionUser.getFriends().add(subscribeTo);
+        repository.save(sessionUser);
     }
 }

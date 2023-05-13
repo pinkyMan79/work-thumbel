@@ -1,5 +1,6 @@
 package one.terenin.config.base;
 
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import java.util.List;
 @Configuration
 @ComponentScan(basePackages = "one.terenin")
 @EnableWebMvc
+@EnableCaching
 public class WebMvcInitializer implements WebMvcConfigurer {
 
     @Override
