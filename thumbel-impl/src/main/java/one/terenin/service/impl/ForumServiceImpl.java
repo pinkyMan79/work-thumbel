@@ -9,6 +9,7 @@ import one.terenin.repository.ForumRepository;
 import one.terenin.service.ForumService;
 import one.terenin.service.impl.util.mapper.ForumMapper;
 import one.terenin.service.impl.util.mapper.MessageMapper;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -25,8 +26,8 @@ public class ForumServiceImpl implements ForumService {
     }
 
     @Override
-    public ForumResponse getForum(String title) {
-        return mapper.fromEntityToResponse.apply(repository.findForumEntityByTitle(title));
+    public ForumResponse getForum(String title, Pageable pageable) {
+        return mapper.fromEntityToResponse.apply(repository.findForumEntityByTitle(title, pageable));
     }
 
     @Override

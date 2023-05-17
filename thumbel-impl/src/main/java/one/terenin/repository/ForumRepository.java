@@ -1,7 +1,7 @@
 package one.terenin.repository;
 
 import one.terenin.entity.ForumEntity;
-import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,7 +11,7 @@ import java.util.UUID;
 @Repository
 public interface ForumRepository extends JpaRepository<ForumEntity, UUID> {
 
-    ForumEntity findForumEntityByTitle(String title);
+    ForumEntity findForumEntityByTitle(String title, Pageable pageable);
     boolean existsByTitle(String title);
 
 }

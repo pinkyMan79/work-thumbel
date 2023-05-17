@@ -3,6 +3,7 @@ package one.terenin.service;
 import one.terenin.dto.communication.ForumRequest;
 import one.terenin.dto.communication.ForumResponse;
 import one.terenin.dto.communication.common.MessageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +13,7 @@ public interface ForumService {
 
     void createForum(ForumRequest request);
 
-    ForumResponse getForum(String title);
+    ForumResponse getForum(String title, Pageable pageable);
 
     ForumResponse sendMessage(MessageRequest request);
 

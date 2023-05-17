@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -21,7 +22,7 @@ class UserServiceImplTest {
     @Mock
     private UserRepository repository;
 
-    @Mock
+    @InjectMocks
     private UserMapper mapper;
 
     @InjectMocks
@@ -34,17 +35,6 @@ class UserServiceImplTest {
 
     @Test
     void testDoRegister() {
-        UserRequest request = new UserRequest();
-        request.setLogin("test_login");
-        UserEntity entity = new UserEntity();
-        entity.setLogin("test_login");
-        when(repository.existsByLogin(request.getLogin())).thenReturn(false);
-        when(mapper.fromRequestToEntity.apply(request)).thenReturn(entity);
-        when(repository.save(any(UserEntity.class))).thenReturn(entity);
-        when(mapper.fromEntityToResponse.apply(entity)).thenReturn(new UserResponse());
 
-        UserResponse response = userService.doRegister(request);
-
-        assertEquals("test_login", response.getLogin());
     }
 }

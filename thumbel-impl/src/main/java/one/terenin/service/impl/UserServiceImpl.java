@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         return new JwtResponse(token,
                 SecurityConstants.TOKEN_PREFIX,
                 userDetails.getEntity().getId(),
-                userDetails.username(),
+                userDetails.getUsername(),
                 Collections.singleton(userDetails.getEntity().getRole().toString()));
     }
 
@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
         log.info(authentication.getName() + "  " + authentication.getPrincipal());
         log.info("{}{}", "get authentication with: ", authentication.getName());
         UserEntity sessionUser = repository.findUserEntityByLogin(((UserDetailsBase)
-                (authentication.getPrincipal())).username());
+                (authentication.getPrincipal())).getUsername());
         UserEntity subscribeTo = repository.findUserEntityByLogin(subscribeToLogin);
         sessionUser.getFriends().add(subscribeTo);
         repository.save(sessionUser);

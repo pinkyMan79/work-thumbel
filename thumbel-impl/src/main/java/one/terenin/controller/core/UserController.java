@@ -25,6 +25,7 @@ public class UserController implements UserAPI {
     @Override
     public ResponseEntity<UserResponse> register(UserRequest request) {
         UserResponse response = service.doRegister(request);
+        // fix this shit
         template.send(request.getEmail(), new Message(request.getEmail().getBytes(StandardCharsets.UTF_8)));
         return ResponseEntity.ok(response);
     }

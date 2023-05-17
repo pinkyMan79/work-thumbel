@@ -17,6 +17,16 @@ services:
     command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes:
       - cache:/data
+  semester-db:
+    container_name: semester-db
+    image: postgres:12-alpine
+    restart: on-failure
+    ports:
+      - "5431:5432"
+    environment:
+      POSTRGES_USER: postgres
+      POSTGRES_PASSWORD: terenin79
+      POSTGRES_DB: SW_AGONA_DATABASE
 volumes:
   cache:
     driver: local
