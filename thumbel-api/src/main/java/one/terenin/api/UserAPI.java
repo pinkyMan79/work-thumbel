@@ -37,9 +37,9 @@ public interface UserAPI {
      * ссылка на форму логина, но в форму логина, и уже прошедшая регистрация будет храниться в бд, а форма логина
      * просто подтвердит валидность e-mail и сгенерит JWT токен
      * */
-    @PostMapping("/email")
+    @PostMapping("/restore-password/{email}")
     //@PreAuthorize("permitAll()")
-    void sendEmail(@RequestBody Message message);
+    void sendEmail(@PathVariable("email") String email);
 
     // load/upload file + create forum + message sending
 

@@ -8,9 +8,11 @@ import one.terenin.dto.user.UserResponse;
 import one.terenin.dto.security.JwtResponse;
 import one.terenin.service.UserService;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -18,10 +20,12 @@ import java.util.List;
 public class UserController implements UserAPI {
 
     private final UserService service;
+    private final RabbitTemplate template;
 
     @Override
     public ResponseEntity<UserResponse> register(UserRequest request) {
         UserResponse response = service.doRegister(request);
+        template.send(request.getEmail(), new Message(request.getEmail().getBytes(StandardCharsets.UTF_8)));
         return ResponseEntity.ok(response);
     }
 
@@ -41,7 +45,8 @@ public class UserController implements UserAPI {
     }
 
     @Override
-    public void sendEmail(Message message) {
-
+    public void sendEmail(String email) {
+        // useless
+        template.send(email, new Message(email.getBytes(StandardCharsets.UTF_8)));
     }
 }

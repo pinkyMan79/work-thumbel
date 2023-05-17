@@ -16,7 +16,7 @@ import java.util.Collection;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-class JwtUtilsTest <T>{
+class JwtUtilsTest{
 
     @Mock
     private Authentication authentication;

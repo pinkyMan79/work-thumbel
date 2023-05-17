@@ -4,6 +4,7 @@ import com.rabbitmq.client.Channel;
 import lombok.RequiredArgsConstructor;
 
 import one.terenin.config.base.propertysource.RabbitMQPropertySource;
+import one.terenin.config.base.rabbtit_core.ExchangesQueuesBindingConfig;
 import one.terenin.config.base.rabbtit_core.RabbitListenerConfig;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -26,7 +27,8 @@ import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.OptionalValidatorFactoryBean;
 
 @Configuration
-@Import({RabbitListenerConfig.class})
+@Import({RabbitListenerConfig.class,
+        ExchangesQueuesBindingConfig.class})
 @RequiredArgsConstructor
 public class RabbitMQConfig {
 
