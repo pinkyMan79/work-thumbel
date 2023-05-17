@@ -35,7 +35,7 @@ public class JwtUtils {
         log.info("{} {} {}","making token with expiration ", now.toString() ,exp.toString());
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String token = Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .setSubject(userDetails.username())
                 .setExpiration(exp).signWith(SignatureAlgorithm.HS256,
                         secret).compact();
         log.info("{}{}", "token generated: ", token);

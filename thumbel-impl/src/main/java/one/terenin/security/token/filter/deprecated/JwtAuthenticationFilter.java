@@ -50,7 +50,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Date exp = Date.from(LocalDateTime.now().plusMinutes(30).atZone(ZoneId.systemDefault()).toInstant());
         // здесь User это стандартизированное и абстрактное представление пользователя в инфраструктуре спрнга
         String token = JWT.create()
-                .withSubject(((User)authResult.getPrincipal()).getUsername())
+                .withSubject(((User)authResult.getPrincipal()).username())
                 .withExpiresAt(exp)
                 .sign(Algorithm.HMAC256("secret"));
         response.addHeader(SecurityConstants.HEADER_NAME, SecurityConstants.TOKEN_PREFIX + token);

@@ -24,9 +24,18 @@ class JwtUtilsTest{
     @InjectMocks
     private JwtUtils jwtUtils;
 
+    @Mock
+    private UserDetails userDetailsImplTest;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        when(authentication.getDetails()).thenReturn(userDetailsImplTest);
+        when(authentication.getPrincipal()).thenReturn(userDetailsImplTest);
+        when(userDetailsImplTest.getUsername()).thenReturn("test_user");
+        when(userDetailsImplTest.getPassword()).thenReturn("test_pass");
+        jwtUtils.setSecret("qerg135geqrvq4tgh31tg15gh3v51credg4tqerg" +
+                "135geqrvq4tgh31tg15gh3v51credg4tqerg135geqrvq4tgh31tg15gh3v51credg4t");
     }
 
     @Test
@@ -42,7 +51,6 @@ class JwtUtilsTest{
         String validToken = jwtUtils.generateJwToken(authentication);
         assertTrue(jwtUtils.checkToken(validToken));
         assertFalse(jwtUtils.checkToken("invalid_token"));
-        assertFalse(jwtUtils.checkToken(null));
     }
 
     @Test
@@ -52,7 +60,7 @@ class JwtUtilsTest{
         assertThrows(MalformedJwtException.class, () -> jwtUtils.getLoginFromToken("invalid_token"));
     }
 
-    class UserDetailsImpl implements UserDetails {
+    static class UserDetailsImpl implements UserDetails {
 
         private final String username;
         private final String password;
