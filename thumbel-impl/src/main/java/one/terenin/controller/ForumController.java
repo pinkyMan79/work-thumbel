@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class ForumController implements ForumAPI {
@@ -22,8 +24,8 @@ public class ForumController implements ForumAPI {
     }
 
     @Override
-    public ResponseEntity<ForumResponse> getForum(String title) {
-        return ResponseEntity.ok(forumService.getForum(title, Pageable.ofSize(10)));
+    public ResponseEntity<List<ForumResponse>> getForum(String title) {
+        return ResponseEntity.ok(forumService.getForums(title, Pageable.ofSize(10)));
     }
 
     @Override

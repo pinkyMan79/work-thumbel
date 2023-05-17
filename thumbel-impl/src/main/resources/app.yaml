@@ -1,5 +1,5 @@
 db:
-  url: jdbc:postgresql://localhost:5431/SW_AGONA_DATABASE
+  url: jdbc:postgresql://localhost:5431/semester_db
   username: postgres
   password: terenin79
   hikari:
@@ -10,7 +10,7 @@ db:
 caching:
   host: localhost
   username: root
-  port: 6379
+  port: 6378
   password: pass
 
 spring:

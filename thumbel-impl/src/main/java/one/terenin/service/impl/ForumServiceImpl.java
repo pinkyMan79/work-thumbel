@@ -12,6 +12,9 @@ import one.terenin.service.impl.util.mapper.MessageMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class ForumServiceImpl implements ForumService {
@@ -26,8 +29,13 @@ public class ForumServiceImpl implements ForumService {
     }
 
     @Override
-    public ForumResponse getForum(String title, Pageable pageable) {
-        return mapper.fromEntityToResponse.apply(repository.findForumEntityByTitle(title, pageable));
+    public List<ForumResponse> getForums(String title, Pageable pageable) {
+        List<ForumEntity> forumEntityByTitle = repository.findForumEntityByTitle(title, pageable);
+        List<ForumResponse> forumResponseList = new ArrayList<>();
+        for (ForumEntity forumEntity: forumEntityByTitle) {
+            forumResponseList.add(mapper.fromEntityToResponse.apply(forumEntity));
+        }
+        return forumResponseList;
     }
 
     @Override

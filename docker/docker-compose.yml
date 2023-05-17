@@ -13,7 +13,7 @@ services:
     image: redis:6.2-alpine
     restart: always
     ports:
-      - '6379:6379'
+      - '6378:6379'
     command: redis-server --save 20 1 --loglevel warning --requirepass eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
     volumes:
       - cache:/data
@@ -24,9 +24,9 @@ services:
     ports:
       - "5431:5432"
     environment:
-      POSTRGES_USER: postgres
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: terenin79
-      POSTGRES_DB: SW_AGONA_DATABASE
+      POSTGRES_DB: semester_db
 volumes:
   cache:
     driver: local

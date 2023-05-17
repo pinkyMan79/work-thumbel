@@ -8,6 +8,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/forum")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public interface ForumAPI {
@@ -19,7 +21,7 @@ public interface ForumAPI {
 
     @GetMapping("/find/{title}")
     @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-    ResponseEntity<ForumResponse> getForum(@PathVariable("title") String title);
+    ResponseEntity<List<ForumResponse>> getForum(@PathVariable("title") String title);
 
     @MessageMapping("/send")
     @PostMapping("/send")
