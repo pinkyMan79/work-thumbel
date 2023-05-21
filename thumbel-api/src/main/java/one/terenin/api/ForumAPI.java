@@ -14,18 +14,17 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public interface ForumAPI {
 
-
     @PostMapping("/create")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     void createForum(@RequestBody ForumRequest request);
 
     @GetMapping("/find/{title}")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     ResponseEntity<List<ForumResponse>> getForum(@PathVariable("title") String title);
 
-    @MessageMapping("/send")
+    //@MessageMapping("/send")
     @PostMapping("/send")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     ResponseEntity<ForumResponse> sendMessage(@RequestBody MessageRequest request);
 
 }

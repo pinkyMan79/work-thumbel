@@ -11,12 +11,12 @@ import javax.servlet.http.Part;
 public interface FileAPI {
 
     @PostMapping("/upload")
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     void upload(@RequestBody FileRequest request, Part part);
 
     @GetMapping("/download/{filename}")
     @ResponseBody
-    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     byte[] download(@PathVariable("filename") String fileName);
 
 }

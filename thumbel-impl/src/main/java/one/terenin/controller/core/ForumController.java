@@ -1,4 +1,4 @@
-package one.terenin.controller;
+package one.terenin.controller.core;
 
 import lombok.RequiredArgsConstructor;
 import one.terenin.api.ForumAPI;
@@ -6,11 +6,15 @@ import one.terenin.dto.communication.ForumRequest;
 import one.terenin.dto.communication.ForumResponse;
 import one.terenin.dto.communication.common.MessageRequest;
 import one.terenin.service.ForumService;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service

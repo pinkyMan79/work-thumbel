@@ -1,4 +1,4 @@
-package one.terenin.controller;
+package one.terenin.controller.core;
 
 import lombok.RequiredArgsConstructor;
 import one.terenin.api.FileAPI;

@@ -15,16 +15,14 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-@CacheConfig(cacheNames = "us")
 public interface UserRepository  extends JpaRepository<UserEntity, UUID> {
 
 
     UserEntity findUserEntityByLoginAndHashPassword(String login, String hashPassword);
-    @Cacheable(key = "#login")
+    //@Cacheable(value="user_cache")
     UserEntity findUserEntityByLogin(String login);
-    @Cacheable(key = "#login")
     boolean existsByLogin(String login);
-    @CacheEvict(key = "#login")
+    //@CacheEvict(value = "user_cache", condition = "login!=null")
     void deleteByLogin(String login);
 
     @Query("select e.friends from UserEntity e")

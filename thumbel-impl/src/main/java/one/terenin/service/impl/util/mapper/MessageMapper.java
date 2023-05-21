@@ -9,21 +9,23 @@ import one.terenin.dto.communication.common.MessageResponse;
 import one.terenin.entity.ForumEntity;
 import one.terenin.entity.MessageEntity;
 import one.terenin.repository.ForumRepository;
+import org.hibernate.service.spi.InjectService;
+import org.springframework.context.annotation.Scope;
+import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
 
 @Component
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class MessageMapper {
 
-    private ForumRepository repository;
+    //private ForumRepository repository;
 
     public Function<MessageRequest, MessageEntity> fromRequestToEntity = req -> {
         return new MessageEntity(
                 req.getContent(),
-                repository.findById(req.getForumId()).get(),
+                null,
                 req.getSenderLogin()
         );
     };

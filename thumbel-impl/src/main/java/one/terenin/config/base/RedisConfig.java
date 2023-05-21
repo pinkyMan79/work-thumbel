@@ -2,6 +2,7 @@ package one.terenin.config.base;
 
 import lombok.RequiredArgsConstructor;
 import one.terenin.config.base.propertysource.CachingPropertySource;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -28,8 +29,8 @@ public class RedisConfig {
         RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
         configuration.setHostName(cachingPropertySource.getHost());
         configuration.setPort(Integer.parseInt(cachingPropertySource.getPort()));
-        configuration.setUsername(cachingPropertySource.getUsername());
-        configuration.setPassword(cachingPropertySource.getPassword());
+        //configuration.setUsername(cachingPropertySource.getUsername());
+        //configuration.setPassword(cachingPropertySource.getPassword());
         return configuration;
     }
 
@@ -42,8 +43,8 @@ public class RedisConfig {
     }
 
     @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory factory,
-                                          RedisCacheConfiguration configuration){
+    public CacheManager cacheManager(RedisConnectionFactory factory,
+                                     RedisCacheConfiguration configuration){
         return RedisCacheManager.builder(factory)
                 .cacheDefaults(configuration)
                 .build();

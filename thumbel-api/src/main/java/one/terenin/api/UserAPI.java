@@ -29,7 +29,7 @@ public interface UserAPI {
     void subscribe(@PathVariable("sub-login") String login);
 
     @GetMapping("/all")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     ResponseEntity<List<UserResponse>> getAllUsers();
 
     /** @apiNote
@@ -37,8 +37,7 @@ public interface UserAPI {
      * ссылка на форму логина, но в форму логина, и уже прошедшая регистрация будет храниться в бд, а форма логина
      * просто подтвердит валидность e-mail и сгенерит JWT токен
      * */
-    @PostMapping("/restore-password/{email}")
-    //@PreAuthorize("permitAll()")
+    @GetMapping("/restore-password/{email}")
     void sendEmail(@PathVariable("email") String email);
 
     // load/upload file + create forum + message sending

@@ -10,7 +10,7 @@ db:
 caching:
   host: localhost
   username: root
-  port: 6378
+  port: 6380
   password: pass
 
 spring:
