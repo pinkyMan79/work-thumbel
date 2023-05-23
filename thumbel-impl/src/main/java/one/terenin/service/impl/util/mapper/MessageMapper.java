@@ -34,7 +34,7 @@ public class MessageMapper {
         return MessageResponse.builder()
                 .id(ent.getId())
                 .content(ent.getContent())
-                .date(ent.getCreatedDate())
+                .date(ent.getCreatedDate().toString())
                 .forumId(ent.getForum().getId())
                 .senderLogin(ent.getSenderLogin())
                 .build();

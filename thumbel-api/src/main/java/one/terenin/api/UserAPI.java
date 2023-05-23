@@ -17,11 +17,9 @@ import java.util.List;
 public interface UserAPI {
 
     @PostMapping("/register")
-    @PreAuthorize("permitAll()")
     ResponseEntity<UserResponse> register(@RequestBody UserRequest request);
 
     @PostMapping("/login")
-    @PreAuthorize("permitAll()")
     ResponseEntity<JwtResponse> login(@RequestBody UserLoginRequest request);
 
     @PutMapping("/subscribe/{sub-login}")

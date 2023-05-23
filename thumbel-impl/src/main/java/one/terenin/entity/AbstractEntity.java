@@ -22,7 +22,6 @@ import java.util.UUID;
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class AbstractEntity {
 
     @Id
