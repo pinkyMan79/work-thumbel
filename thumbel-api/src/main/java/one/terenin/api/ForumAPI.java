@@ -9,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/forum")
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -26,5 +27,9 @@ public interface ForumAPI {
     @PostMapping("/send")
     @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     ResponseEntity<ForumResponse> sendMessage(@RequestBody MessageRequest request);
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('USER')")
+    ResponseEntity<Integer> getCountOfMessages(String login, UUID forumId);
 
 }

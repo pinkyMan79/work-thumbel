@@ -22,7 +22,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Stream;
 
 @Slf4j
 @Component
@@ -80,5 +84,15 @@ public class UserServiceImpl implements UserService {
         UserEntity subscribeTo = repository.findUserEntityByLogin(subscribeToLogin);
         sessionUser.getFriends().add(subscribeTo);
         repository.save(sessionUser);
+    }
+
+    @Override
+    public List<UserResponse> showFriends(String login) {
+        List<UserEntity> allSubscribersByLogin = repository.findAllSubscribersByLogin(login);
+        List<UserResponse> responses = new ArrayList<>();
+        for (UserEntity entity : allSubscribersByLogin) {
+            responses.add(mapper.fromEntityToResponse.apply(entity));
+        }
+        return responses;
     }
 }

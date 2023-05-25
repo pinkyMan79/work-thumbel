@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
@@ -35,5 +36,10 @@ public class ForumController implements ForumAPI {
     @Override
     public ResponseEntity<ForumResponse> sendMessage(MessageRequest request) {
         return ResponseEntity.ok(forumService.sendMessage(request));
+    }
+
+    @Override
+    public ResponseEntity<Integer> getCountOfMessages(String login, UUID forumId) {
+        return ResponseEntity.ok(forumService.getCount(login, forumId));
     }
 }

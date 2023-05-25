@@ -8,6 +8,8 @@ import one.terenin.dto.security.JwtResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.http.HttpRequest;
+import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
 
@@ -16,6 +18,8 @@ public interface UserService {
     JwtResponse doLogin(UserLoginRequest loginRequest);
 
     void doSubscribe(String subcribeToLogin);
+
+    List<UserResponse> showFriends(String login);
 
 
 }

@@ -29,7 +29,6 @@ public interface UserAPI {
     @GetMapping("/all")
     @PreAuthorize("hasAuthority('ADMIN')")
     ResponseEntity<List<UserResponse>> getAllUsers();
-
     /** @apiNote
      * После того как будет сделана попытка регистрации, автоматически пользователю отправляем e-mail в котором будет
      * ссылка на форму логина, но в форму логина, и уже прошедшая регистрация будет храниться в бд, а форма логина

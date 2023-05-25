@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -49,6 +50,11 @@ public class ForumServiceImpl implements ForumService {
         receivedMessage.setForum(refreshOnPage);
         messageRepository.save(receivedMessage);
         return mapper.fromEntityToResponse.apply(refreshOnPage);
+    }
+
+    @Override
+    public Integer getCount(String login, UUID forumId) {
+        return forumRepository.specialQuery(forumId, login);
     }
 
     private MessageEntity doSaveMessage(MessageRequest request){

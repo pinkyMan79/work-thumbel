@@ -6,6 +6,7 @@ import one.terenin.dto.communication.common.MessageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ForumService {
 
@@ -14,5 +15,7 @@ public interface ForumService {
     List<ForumResponse> getForums(String title, Pageable pageable);
 
     ForumResponse sendMessage(MessageRequest request);
+
+    Integer getCount(String login, UUID forumId);
 
 }
