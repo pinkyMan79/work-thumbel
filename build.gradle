@@ -49,6 +49,7 @@ subprojects{
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
+        implementation 'org.springframework:spring-webflux:5.3.16'
 
         implementation 'redis.clients:jedis:3.9.0'
 

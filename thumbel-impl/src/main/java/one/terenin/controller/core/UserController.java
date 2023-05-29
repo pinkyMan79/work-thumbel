@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,6 +22,8 @@ public class UserController implements UserAPI {
 
     private final UserService service;
     private final RabbitTemplate template;
+
+    private AtomicBoolean isActivated;
 
     @Override
     public ResponseEntity<UserResponse> register(UserRequest request) {

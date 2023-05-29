@@ -14,6 +14,9 @@ public class FileController implements FileAPI {
 
     private final FileService fileService;
 
+    @io.swagger.annotations.ApiResponses({
+            @ApiResponse(code = 200, message = "File updated", response = UUID.class),
+            @ApiResponse(code = 400, message = "Error file-upd")})
     @Override
     public void upload(FileRequest request, Part part) {
         fileService.doUpload(request, part);

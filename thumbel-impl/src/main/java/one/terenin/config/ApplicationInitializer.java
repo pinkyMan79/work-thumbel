@@ -26,6 +26,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         context.register(RabbitMQConfig.class);
         context.register(RedisConfig.class);
         context.register(WebSocketConfig.class);
+        context.register(SwaggerConfig.class);
 
         servletContext.addListener(new ContextLoaderListener(context));
 
