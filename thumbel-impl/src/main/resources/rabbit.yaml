@@ -1,0 +1,16 @@
+rabbit:
+
+  exchange: email_exchange
+
+  gmail:
+    queue: gmail_queue
+    binding: @gmail.com
+  yandex:
+    queue: ya_mail_queue
+    binding: @yandex.ru
+  mail:
+    queue: mail_queue
+    binding: @mail.ru
+  unknown:
+    queue: unknown_email_queue
+    biding: unknown

@@ -1,8 +1,40 @@
 db:
-  url: jdbc:postgresql://localhost:5432/SEMESTER
+  url: jdbc:postgresql://localhost:5431/semester_db
   username: postgres
   password: terenin79
   hikari:
     max-pool-size: 10
   driver:
     classname: org.postgresql.Driver
+
+caching:
+  host: localhost
+  username: root
+  port: 6380
+  password: pass
+
+spring:
+  security:
+    jwt:
+      secret: 3eb5dee7de954d6ca9a0c6d9219f35c63eb5dee7de954d6ca9a0c6d9219f35c6
+
+rabbit:
+  username: guest
+  password: guest
+
+  exchange: email_exchange
+  gmail:
+    queue: gmail_queue
+    binding: gmail.com
+  yandex:
+    queue: ya_mail_queue
+    binding: yandex.ru
+  mail:
+    queue: mail_queue
+    binding: mail.ru
+  unknown:
+    queue: unknown_email_queue
+    biding: unknown
+
+  dqlQueueName: dql
+  dlqExchangeName: dlq

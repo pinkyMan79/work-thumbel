@@ -12,6 +12,7 @@ import one.terenin.entity.UserEntity;
 import one.terenin.entity.common.Role;
 import one.terenin.entity.common.State;
 import one.terenin.repository.UserRepository;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -19,13 +20,14 @@ import org.springframework.stereotype.Component;
 import java.util.function.Function;
 
 @Component
-@RequiredArgsConstructor
-@AllArgsConstructor
 public class FileMapper {
 
     private UserRepository repository;
 
-    // on generation moment have no files/friends
+    public FileMapper(UserRepository repository) {
+        this.repository = repository;
+    }
+
     public Function<FileRequest, FileEntity> fromRequestToEntity = req -> {
         return new FileEntity(
                 req.getFileName(),

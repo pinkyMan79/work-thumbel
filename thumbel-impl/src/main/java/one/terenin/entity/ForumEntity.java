@@ -6,10 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Set;
 
 @Getter
@@ -28,6 +25,7 @@ public class ForumEntity extends AbstractEntity{
     private String description;
 
     @OneToMany(mappedBy = "forum")
+    //@JoinColumn(name = "messages")
     private Set<MessageEntity> messages;
 
 }

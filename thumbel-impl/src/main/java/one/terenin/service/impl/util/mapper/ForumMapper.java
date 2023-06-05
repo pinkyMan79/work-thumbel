@@ -8,17 +8,21 @@ import one.terenin.dto.file.FileRequest;
 import one.terenin.dto.file.FileResponse;
 import one.terenin.entity.FileEntity;
 import one.terenin.entity.ForumEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
-@AllArgsConstructor
 public class ForumMapper {
 
     private MessageMapper messageMapper;
+
+    public ForumMapper(MessageMapper messageMapper) {
+        this.messageMapper = messageMapper;
+    }
 
     public Function<ForumRequest, ForumEntity> fromRequestToEntity = req -> {
         return new ForumEntity(

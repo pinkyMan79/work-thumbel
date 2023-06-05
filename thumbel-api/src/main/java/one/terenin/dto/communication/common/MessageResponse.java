@@ -15,7 +15,7 @@ import java.util.UUID;
 public class MessageResponse {
 
     private UUID id;
-    private Instant date;
+    private String date;
     private String content;
     private UUID forumId;
     private String senderLogin;

@@ -1,8 +1,6 @@
 package one.terenin.config;
 
-import one.terenin.config.base.DataBaseConfig;
-import one.terenin.config.base.WebMvcInitializer;
-import one.terenin.config.base.YAMLConfigurer;
+import one.terenin.config.base.*;
 import one.terenin.security.SecurityConfig;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
@@ -25,6 +23,10 @@ public class ApplicationInitializer implements WebApplicationInitializer {
         context.register(DataBaseConfig.class);
         context.register(WebMvcInitializer.class);
         context.register(SecurityConfig.class);
+        context.register(RabbitMQConfig.class);
+        context.register(RedisConfig.class);
+        context.register(WebSocketConfig.class);
+        context.register(SwaggerConfig.class);
 
         servletContext.addListener(new ContextLoaderListener(context));
 

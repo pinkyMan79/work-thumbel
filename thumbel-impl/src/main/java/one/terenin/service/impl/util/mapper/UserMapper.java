@@ -1,10 +1,14 @@
 package one.terenin.service.impl.util.mapper;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import one.terenin.dto.user.UserRequest;
 import one.terenin.dto.user.UserResponse;
+import one.terenin.dto.util.Position;
 import one.terenin.entity.UserEntity;
 import one.terenin.entity.common.Role;
 import one.terenin.entity.common.State;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -16,11 +20,16 @@ public class UserMapper {
 
     private PasswordEncoder encoder;
 
+    public UserMapper(PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
+
     // on generation moment have no files/friends
     public Function<UserRequest, UserEntity> fromRequestToEntity = req -> {
         return new UserEntity(
                 req.getLogin(),
                 encoder.encode(req.getPassword()),
+                req.getEmail(),
                 req.getPhoto(),
                 req.getBiography(),
                 null,
@@ -41,8 +50,4 @@ public class UserMapper {
                 .position(ent.getPosition())
                 .build();
     };
-
-    public UserMapper(PasswordEncoder encoder) {
-        this.encoder = encoder;
-    }
 }

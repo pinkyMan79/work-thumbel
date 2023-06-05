@@ -5,6 +5,7 @@ import one.terenin.dto.file.FileRequest;
 
 import javax.servlet.http.Part;
 
+
 public interface FileService {
 
     void doUpload(FileRequest request, Part file);
