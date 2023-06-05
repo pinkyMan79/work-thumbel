@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  MyRabbit:
+    container_name: myRabbit
+    image: rabbitmq:3.11-management
+    restart: on-failure
+    hostname: localhost
+    ports:
+      - "5671:5672"
+      - "15671:15672"

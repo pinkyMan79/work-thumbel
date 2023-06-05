@@ -1,11 +1,14 @@
 package one.terenin.entity;
 
+import liquibase.pro.packaged.S;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import one.terenin.dto.util.Position;
+import one.terenin.entity.common.Role;
+import one.terenin.entity.common.State;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,12 +27,12 @@ public class UserEntity extends AbstractEntity{
     private String login;
 
     @Column(name = "password")
-    private String password;
+    private String hashPassword;
 
     @Column(name = "photo")
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    private byte photo;
+    private byte[] photo;
 
     @Column(name = "bio")
     private String biography;
@@ -44,5 +47,29 @@ public class UserEntity extends AbstractEntity{
     @Enumerated(EnumType.STRING)
     @Column(name = "position")
     private Position position;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state")
+    private State state;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private Role role;
+
+    public boolean isAdmin(){
+        return role.equals(Role.ADMIN);
+    }
+    public boolean isUser(){
+        return role.equals(Role.USER);
+    }
+    public boolean isGuest(){
+        return role.equals(Role.GUEST);
+    }
+    public boolean isActive(){
+        return state.equals(State.NOT_BANNED);
+    }
+    public boolean isBanned(){
+        return state.equals(State.BANNED);
+    }
 
 }

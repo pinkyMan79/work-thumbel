@@ -20,11 +20,11 @@ public class TestController {
     @GetMapping
     public String mth(Model model){
         List<UserResponse> responses = new ArrayList<>();
-        responses.add(UserResponse.builder().biography("[]").createdDate(Instant.now()).id(UUID.randomUUID()).login("lof").position(Position.CREATOR).build());
-        responses.add(UserResponse.builder().biography("{}").createdDate(Instant.now()).id(UUID.randomUUID()).login("lof1").position(Position.CREATOR).build());
-        responses.add(UserResponse.builder().biography("()").createdDate(Instant.now()).id(UUID.randomUUID()).login("lof12").position(Position.CREATOR).build());
+        responses.add(UserResponse.builder().biography("[]").createdDate(null).id(UUID.randomUUID()).login("lof").position(Position.CREATOR).build());
+        responses.add(UserResponse.builder().biography("{}").createdDate(null).id(UUID.randomUUID()).login("lof1").position(Position.CREATOR).build());
+        responses.add(UserResponse.builder().biography("()").createdDate(null).id(UUID.randomUUID()).login("lof12").position(Position.CREATOR).build());
         model.addAttribute("responses", responses);
-        return "fragments/hello";
+        return "fragments/index";
     }
 
 }

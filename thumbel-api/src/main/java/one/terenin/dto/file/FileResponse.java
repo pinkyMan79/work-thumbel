@@ -16,7 +16,7 @@ public class FileResponse {
     private UUID id;
     private String fileName;
     //private String fileLocation;
-    private byte data;
+    private byte[] data;
     private UUID maintainer;
 
 }

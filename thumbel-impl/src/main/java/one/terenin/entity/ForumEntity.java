@@ -27,7 +27,7 @@ public class ForumEntity extends AbstractEntity{
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "forumId")
+    @OneToMany(mappedBy = "forum")
     private Set<MessageEntity> messages;
 
 }

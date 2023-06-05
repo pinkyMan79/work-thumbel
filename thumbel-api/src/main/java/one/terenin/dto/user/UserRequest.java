@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import one.terenin.dto.util.Position;
 
 @Data
 @AllArgsConstructor
@@ -15,7 +16,8 @@ public class UserRequest {
     private String password;
     private String repeatPassword;
     private String email;
-    private byte photo;
+    private byte[] photo;
     private String biography;
+    private Position position;
 
 }
